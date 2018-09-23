@@ -1,53 +1,46 @@
-var path = require("path");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-
-const extractSass = new ExtractTextPlugin({
-    filename: "[name].[contenthash].css",
-    disable: process.env.NODE_ENV === "development"
-});
-
-const makeHTML = new HtmlWebpackPlugin({
-    template: './index.html'
-});
+var path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const devMode = process.env.NODE_ENV !== 'production'
 
 module.exports = {
+  mode: devMode ? 'development' : 'production',
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: devMode ? '[name].css' : '[name].[hash].css',
+      chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
+    }),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, 'index.html')
+    }),
+  ],
   entry: {
-    app: ["./js/main.ts"]
+    app: ['./ts/main.ts']
   },
   output: {
-    path: path.resolve(__dirname, "build"),
-    publicPath: "/",
-    filename: "bundle.js"
+    path: path.resolve(__dirname, 'build'),
+    publicPath: '/',
+    filename: 'bundle.js'
   },
   resolve: {
-      extensions: ['.ts', '.tsx', '.js']
+    extensions: ['.ts', '.tsx', '.js']
   },
   module: {
     rules: [
-        {
-            test: /\.tsx?$/, loader: 'ts-loader'
-        },
-        {
-        test: /\.scss$/,
-        use: extractSass.extract({
-            use: [{
-                loader: "css-loader"
-            }, {
-                loader: "sass-loader",
-                options: {
-                    indentedSyntax: true,
-                }
-            }],
-            // use style-loader in development
-            fallback: "style-loader"
-        })
-    }]
+      {
+        test: /\.tsx?$/, loader: 'ts-loader'
+      },
+      {
+        test: /\.(sa|sc|c)ss$/,
+        use: [
+          devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+          'css-loader',
+          'sass-loader',
+        ],
+      }
+    ],
   },
   devServer: {
-      contentBase: "./public",
+    contentBase: './public',
   },
-  plugins: [
-    extractSass, makeHTML
-  ]
 };
