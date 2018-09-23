@@ -1,2 +1,3 @@
-import '../sass/main.scss';
+import '../sass/main.scss'
 
+const onLoad = () => null
