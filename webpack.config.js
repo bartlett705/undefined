@@ -15,7 +15,7 @@ module.exports = {
     }),
   ],
   entry: {
-    app: ['./ts/main.ts']
+    app: ['./tsx/index.tsx']
   },
   output: {
     path: path.resolve(__dirname, 'build'),

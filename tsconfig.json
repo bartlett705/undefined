@@ -1,20 +1,25 @@
 {
     "compilerOptions": {
       "lib": [
-            "es2015",
+            "es6",
             "dom"
         ],
       "allowJs": true,
-      "sourceMap": true
+      "jsx": "react",
+      "noImplicitAny": true,
+      "noImplicitThis": true,
+      "sourceMap": true,
+      "target": "es5",
+      "types": [
+        "dom"
+      ]
     },
 
     "exclude": [
         "node_modules",
         "build",
         "scripts",
-        "acceptance-tests",
         "webpack",
         "jest",
-        "src/setupTests.ts"
       ]
 }
