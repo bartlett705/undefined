@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { Component } from 'react'
 
 const DELAY = 100
 const SLOW_CHARS = new Set([
@@ -51,7 +50,7 @@ class TTYLine extends React.Component<
     }
 
     private setTick = (delay: number) => {
-        this.handle = setTimeout(
+        this.handle = window.setTimeout(
             () => this.tick(),
             delay,
         )
