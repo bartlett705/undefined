@@ -4,13 +4,12 @@ body {
     font-family: 'Spectral SC', serif;
 };
 
-// .tty__char--almost-last {
-//     color: #08cc08;
-// }
+.tty::after {
+    content: attr(data-last);
+    transform: translate(100%, 0);
 
-// .tty__char--last {
-//     color: #005a00;
-// }
+    color: #0acc08;
+}
 
 header {
     opacity: 0;

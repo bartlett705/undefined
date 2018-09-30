@@ -10,7 +10,7 @@ const SLOW_CHARS = new Set([
 export class TTY extends React.Component<
     { children: string[] },
     { currentLine: number }
-> {
+    > {
     public state = { currentLine: 1 }
 
     public render() {
@@ -29,7 +29,7 @@ export class TTY extends React.Component<
 class TTYLine extends React.Component<
     { children: string, onLineComplete: () => void },
     { currentIndex: number }
-> {
+    > {
     public state = { currentIndex: 0 }
     private handle: number
 
@@ -76,16 +76,9 @@ class TTYLine extends React.Component<
 }
 
 const TTYPresentation = ({ children }: { children: string | React.ReactNode[] }) => (
-    <div className="tty">
-        <span className="tty__char">
-            {children.slice(0, -2)}
-        </span>
-        <span className="tty__char--almost-last">
-            {children.slice(-2, -1)}
-        </span>
-        <span className="tty__char--last">
-
-            {children.slice(-1)}
-        </span>
+    <div className="tty"
+        data-last={children.slice(-1)}
+    >
+        {children.slice(0, -2)}
     </div>
 )

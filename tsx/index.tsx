@@ -9,7 +9,7 @@ const App = () => (
             <h1>A website by Ahmad</h1>
         </header>
         <TTY>
-            {'> HeyoThere, barleysauce...\n'}
+            {'> HeyoThere, barleysauce... \n'}
             {'> Not much to see here yet \n'}
             {'> But maybe, there will be stuff...at some point. \n'}
         </TTY>
