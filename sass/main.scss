@@ -1,13 +1,12 @@
 body {
-    background-color: #181818;
-    color: #fafafa;
-    font-family: 'Spectral SC', serif;
+    background: #000;
+    color: #d0d0d0;
+    font-family: "Courier";
+    font-weight: 700;   
 };
 
-.tty::after {
+.tty__line::after {
     content: attr(data-last);
-    transform: translate(100%, 0);
-
     color: #0acc08;
 }
 
@@ -27,4 +26,50 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.tty {
+    width: 30rem;
+    height: 3rem;
+    background-color: #181818;
+    border-radius: 3px;
+    padding: 1rem;
+    transition-property: height;
+    transition-duration: 0.3s;
+}
+
+.tty--clicked {
+    height: 6rem;
+}
+
+#tty__input {
+    width: 28rem;
+    background-color: inherit;
+    color: inherit;
+    font-family: inherit;
+    font-weight: 700;   
+    border: none;
+    outline: none;
+    caret-color: rgb(0, 200, 0);
+}
+
+.tty__input {
+    border: 0;
+    border-top: 1px;
+    border-style: dashed;
+    border-color: green;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+
+    &--error {
+        border-color: red;
+    }
+}
+
+.tty__output {
+    height: 4rem;
+
+    &--error {
+        color: #bb0000;
+    }
 }
