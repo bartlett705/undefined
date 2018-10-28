@@ -1,75 +1,87 @@
 body {
-    background: #000;
-    color: #d0d0d0;
-    font-family: "Courier";
-    font-weight: 700;   
-};
+  background: #000;
+  color: #d0d0d0;
+  font-family: 'Courier';
+  font-weight: 700;
+}
 
 .tty__line::after {
-    content: attr(data-last);
-    color: #0acc08;
+  content: attr(data-last);
+  color: #0acc08;
 }
 
 header {
-    opacity: 0;
-    display: flex;
-    justify-content: center;
-    
-    h1 {
-        background-color: salmon;
-        padding: 1rem;
-        border-radius: 3px;
-    };
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+
+  h1 {
+    background-color: salmon;
+    padding: 1rem;
+    border-radius: 3px;
+  }
 }
 
 main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .tty {
-    width: 30rem;
-    height: 3rem;
-    background-color: #181818;
-    border-radius: 3px;
-    padding: 1rem;
-    transition-property: height;
-    transition-duration: 0.3s;
+  width: 30rem;
+  height: 3rem;
+  background-color: #181818;
+  border-radius: 3px;
+  padding: 1rem;
+  transition-property: height;
+  transition-duration: 0.3s;
 }
 
 .tty--clicked {
-    height: 6rem;
+  height: 6rem;
 }
 
 #tty__input {
-    width: 28rem;
-    background-color: inherit;
-    color: inherit;
-    font-family: inherit;
-    font-weight: 700;   
-    border: none;
-    outline: none;
-    caret-color: rgb(0, 200, 0);
+  width: 28rem;
+  background-color: inherit;
+  color: inherit;
+  font-family: inherit;
+  font-weight: 700;
+  border: none;
+  outline: none;
+  caret-color: rgb(0, 200, 0);
 }
 
 .tty__input {
-    border: 0;
-    border-top: 1px;
-    border-style: dashed;
-    border-color: green;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+  border: 0;
+  border-top: 1px;
+  border-color: rgb(216, 203, 32);
+  border-style: dashed;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 
-    &--error {
-        border-color: red;
-    }
+  &--success {
+    border-color: green;
+  }
+
+  &--error {
+    border-color: red;
+  }
+
+  &--info {
+    border-color: #2255aa;
+  }
 }
 
 .tty__output {
-    height: 4rem;
+  height: 4rem;
 
-    &--error {
-        color: #bb0000;
-    }
+  //   &--error {
+  //     color: #bb0000;
+  //   }
+
+  //   &--info {
+  //     color: #2255aa;
+  //   }
 }

@@ -1,22 +1,12 @@
 {
-    "compilerOptions": {
-      "lib": [
-            "es6",
-            "dom"
-        ],
-      "allowJs": true,
-      "jsx": "react",
-      "noImplicitAny": true,
-      "noImplicitThis": true,
-      "sourceMap": true,
-      "target": "es5",
-    },
+  "compilerOptions": {
+    "lib": ["es6", "dom"],
+    "jsx": "react",
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "sourceMap": true,
+    "target": "es5"
+  },
 
-    "exclude": [
-        "node_modules",
-        "build",
-        "scripts",
-        "webpack",
-        "jest",
-      ]
+  "exclude": ["node_modules", "build", "scripts", "webpack", "jest"]
 }
