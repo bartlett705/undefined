@@ -7,6 +7,6 @@ notifications:
   email: false
 node_js: '8'
 install: npm install
-script: npm t
+script: npm run test:ci
 branches:
   only: master
