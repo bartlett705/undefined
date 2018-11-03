@@ -14,6 +14,7 @@ pids
 node_modules/
 .npm
 config.js
+coverage
 
 # Builds
 build

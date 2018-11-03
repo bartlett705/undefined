@@ -1,83 +1,60 @@
 import * as React from 'react'
-import { CLISubmitter } from '.'
-import { CLIResponseType } from './models'
+import { CLIResponseType } from '../models'
+import { TTYInput } from './TTYInput'
 
 const DELAY = 100
 const SLOW_CHARS = new Set(['.', ',', '\n'])
 
+export interface Props {
+  children: string[]
+  type: CLIResponseType
+  onSubmit: (value: string) => void
+}
+
 export class TTY extends React.Component<
-  { children: string[]; type: CLIResponseType; onSubmit: CLISubmitter },
+  Props,
   { clicked: boolean; showInput: boolean }
 > {
   public state = { clicked: false, showInput: false }
+  private timer: number
+
+  public componentWillUnmount() {
+    window.clearTimeout(this.timer)
+  }
 
   public render() {
+    const { type } = this.props
     return (
       <div
-        className={`tty ${this.state.clicked ? 'tty--clicked' : ''}`}
+        className={`tty ${this.state.clicked &&
+          (type === CLIResponseType.StartPost || true
+            ? 'tty--posting'
+            : 'tty--clicked')}`}
         onClick={this.showInput}
         onMouseEnter={this.showInput}
         onFocus={this.showInput}
         tabIndex={1}
+        data-testid="tty"
       >
-        <TTYOutput type={this.props.type}>{this.props.children}</TTYOutput>
-        {this.state.showInput && <TTYInput onSubmit={this.props.onSubmit} />}
+        <TTYOutput type={type}>{this.props.children}</TTYOutput>
+        {this.state.showInput && (
+          <TTYInput onSubmit={this.props.onSubmit} type={type} />
+        )}
       </div>
     )
   }
 
-  private showInput = () =>
-    this.setState({ clicked: true }, () =>
-      window.setTimeout(() => this.setState({ showInput: true }), 300)
-    )
-}
-
-class TTYInput extends React.Component<
-  { onSubmit: CLISubmitter },
-  { type: CLIResponseType; value: string }
-> {
-  public state = { type: CLIResponseType.Standard, value: '' }
-
-  public render() {
-    return (
-      <form
-        className={`tty__input ${
-          this.state.type === CLIResponseType.Error ? 'tty__input--error' : ''
-        } ${
-          this.state.type === CLIResponseType.Info ? 'tty__input--info' : ''
-        } ${
-          this.state.type === CLIResponseType.Success
-            ? 'tty__input--success'
-            : ''
-        }`}
-        onSubmit={this.onSubmit}
-      >
-        <label htmlFor="tty__input">&gt; </label>
-        <input
-          id="tty__input"
-          autoFocus
-          autoComplete="off"
-          spellCheck={false}
-          type="text"
-          value={this.state.value}
-          onChange={(e) => this.setState({ value: e.target.value })}
-        />
-      </form>
-    )
-  }
-
-  private onSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
-    const valueToSubmit = this.state.value
-    this.setState({ value: '' })
-
-    try {
-      const { type } = await this.props.onSubmit(valueToSubmit)
-      this.setState({ type })
-    } catch (err) {
-      this.setState({ type: CLIResponseType.Error })
+  private showInput = () => {
+    if (this.timer) {
+      return
     }
+
+    this.timer = window.setTimeout(
+      () => this.setState({ showInput: true }),
+      300
+    )
+
+    this.setState({ clicked: true })
   }
 }
 
@@ -148,7 +125,7 @@ class TTYLine extends React.Component<TTYLineProps, { currentIndex: number }> {
   }
 
   public componentWillUnmount() {
-    clearTimeout(this.handle)
+    window.clearTimeout(this.handle)
   }
 
   public componentDidUpdate(prevProps: TTYLineProps) {

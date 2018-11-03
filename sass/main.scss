@@ -1,6 +1,8 @@
+$main: #d0d0d0;
+
 body {
   background: #000;
-  color: #d0d0d0;
+  color: $main;
   font-family: 'Courier';
   font-weight: 700;
 }
@@ -36,13 +38,18 @@ main {
   padding: 1rem;
   transition-property: height;
   transition-duration: 0.3s;
+
+  &--clicked {
+    height: 6rem;
+  }
+
+  &--posting {
+    height: 8rem;
+  }
 }
 
-.tty--clicked {
-  height: 6rem;
-}
-
-#tty__input {
+.tty__input > input,
+.tty__input > textarea {
   width: 28rem;
   background-color: inherit;
   color: inherit;
@@ -53,7 +60,13 @@ main {
   caret-color: rgb(0, 200, 0);
 }
 
+.tty__input > textarea {
+  height: 4rem;
+}
+
 .tty__input {
+  display: flex;
+  align-items: center;
   border: 0;
   border-top: 1px;
   border-color: rgb(216, 203, 32);
@@ -84,4 +97,37 @@ main {
   //   &--info {
   //     color: #2255aa;
   //   }
+}
+
+.char-count {
+  color: lighten(lightseagreen, 25%);
+
+  &--warning {
+    color: lightsalmon;
+  }
+
+  &--error {
+    color: darken(lightsalmon, 75%);
+  }
+}
+
+.post-controls {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+
+  &__submit {
+    cursor: pointer;
+    margin-bottom: 0.5rem;
+    border-width: 0px;
+    border-radius: 5px;
+    font-size: 1.5rem;
+    background-color: royalblue;
+    color: black;
+
+    &--disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+  }
 }

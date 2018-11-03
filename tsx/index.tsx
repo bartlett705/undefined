@@ -4,8 +4,6 @@ import '../sass/main.scss'
 import { CLIRequestBody, CLIResponse, CLIResponseType } from './models'
 import { TTY } from './tty'
 
-export type CLISubmitter = (input: string) => Promise<CLIResponse>
-
 class App extends React.Component<
   {},
   { ttyContent: string[]; ttyType: CLIResponseType }
@@ -34,7 +32,12 @@ class App extends React.Component<
     )
   }
 
-  private onSubmit = async (input: string): Promise<CLIResponse> => {
+  private onSubmit = async (input: string) => {
+    let { ttyContent, ttyType } = {
+      ttyContent: ['Unrecognized Server Response 🙁'],
+      ttyType: CLIResponseType.Error
+    }
+
     try {
       const res = await fetch('https://mosey.systems/api/cli', {
         body: JSON.stringify(buildBody(input)),
@@ -47,37 +50,16 @@ class App extends React.Component<
 
       switch (res.status) {
         case 200:
-          const { content, type } = await res.json()
-          // tslint:disable-next-line:no-console
-          console.log({ content, type })
-          return this.dispatchResponse(content, type)
-        case 412:
-          return this.dispatchResponse(
-            ['Unrecognized Server Response 🙁  '],
-            CLIResponseType.Error
-          )
-        default:
-          return this.dispatchResponse(
-            ['Unrecognized Server Response 🙁  '],
-            CLIResponseType.Error
-          )
+           ({ content: ttyContent, type: ttyType } = await res.json())
+           break
       }
     } catch (err) {
       // tslint:disable-next-line:no-console
       console.warn(err)
-      return this.dispatchResponse(
-        ['Network Error. Could not reach remote system.  '],
-        CLIResponseType.Error
-      )
+      ttyContent = ['Network Error. Could not reach remote system.  ']
     }
-  }
 
-  private dispatchResponse = (
-    content: CLIResponse['content'],
-    type: CLIResponseType
-  ) => {
-    this.setState({ ttyContent: content, ttyType: type })
-    return Promise.resolve({ content, type })
+    this.setState({ ttyContent, ttyType })
   }
 }
 

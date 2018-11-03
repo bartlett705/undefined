@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "downlevelIteration": true,
     "lib": ["es6", "dom"],
     "jsx": "react",
     "noImplicitAny": true,
