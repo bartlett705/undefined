@@ -1,6 +1,6 @@
-var path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+var path = require('path')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const devMode = process.env.NODE_ENV !== 'production'
 
 module.exports = {
@@ -8,14 +8,14 @@ module.exports = {
   plugins: [
     new MiniCssExtractPlugin({
       filename: devMode ? '[name].css' : '[name].[hash].css',
-      chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
+      chunkFilename: devMode ? '[id].css' : '[id].[hash].css'
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'index.html')
-    }),
+    })
   ],
   entry: {
-    app: ['./tsx/index.tsx']
+    app: ['./src/index.tsx']
   },
   output: {
     path: path.resolve(__dirname, 'build'),
@@ -28,19 +28,20 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/, loader: 'ts-loader'
+        test: /\.tsx?$/,
+        loader: 'ts-loader'
       },
       {
         test: /\.(sa|sc|c)ss$/,
         use: [
           devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
           'css-loader',
-          'sass-loader',
-        ],
+          'sass-loader'
+        ]
       }
-    ],
+    ]
   },
   devServer: {
-    contentBase: './public',
-  },
-};
+    contentBase: './public'
+  }
+}

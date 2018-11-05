@@ -13,8 +13,12 @@ pids
 
 node_modules/
 .npm
-config.js
+src/config.ts
+
+# Testing
 coverage
+cypress/screenshots
+cypress/videos
 
 # Builds
 build

@@ -1,6 +1,7 @@
 import { cleanup, fireEvent } from 'react-testing-library'
 import 'react-testing-library/cleanup-after-each'
 import { setupTest } from '../../../test'
+import { lotsOfJunk } from '../../../test/utils'
 import { CLIResponseType } from '../../models'
 import { Props, TTYInput } from '../TTYInput'
 
@@ -43,12 +44,8 @@ it('disables post submit if post is over 160 chars', () => {
     type: CLIResponseType.StartPost
   })
 
-  const lotsOfJunk = [...Array(20).keys()].reduce(
-    (res, _) => res.concat('some junk 🎰 🍍 🐖 '),
-    ''
-  )
   const textArea = getByTestId('post')
-  fireEvent.change(textArea, { target: { value: lotsOfJunk } })
+  fireEvent.change(textArea, { target: { value: lotsOfJunk() } })
   const submitButton = getByRole('button')
   fireEvent.click(submitButton)
 
