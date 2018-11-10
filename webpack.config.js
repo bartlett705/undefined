@@ -2,20 +2,30 @@ var path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const devMode = process.env.NODE_ENV !== 'production'
+const CleanWebPackPlugin = require('clean-webpack-plugin')
+const webpack = require('webpack')
 
+const plugins = [
+  new CleanWebPackPlugin(['dist'], {
+    root: path.resolve(__dirname),
+    verbose: true
+  }),
+  new MiniCssExtractPlugin({
+    filename: devMode ? '[name].css' : '[name].[hash].css',
+    chunkFilename: devMode ? '[id].css' : '[id].[hash].css'
+  }),
+  new HtmlWebpackPlugin({
+    template: path.resolve(__dirname, 'index.html')
+  })
+]
 module.exports = {
   mode: devMode ? 'development' : 'production',
-  plugins: [
-    new MiniCssExtractPlugin({
-      filename: devMode ? '[name].css' : '[name].[hash].css',
-      chunkFilename: devMode ? '[id].css' : '[id].[hash].css'
-    }),
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, 'index.html')
-    })
-  ],
+  plugins,
   entry: {
     app: ['./src/index.tsx']
+  },
+  optimization: {
+    minimize: !devMode
   },
   output: {
     path: path.resolve(__dirname, 'build'),
