@@ -8,16 +8,18 @@ export interface Props {
 
 interface State {
   value: string
+  isFirstCommand: boolean
 }
 
 export class TTYInput extends React.Component<Props, State> {
-  public readonly state = {
+  public readonly state: State = {
+    isFirstCommand: true,
     value:
       this.props.type === CLIResponseType.StartPost ? '25th for 45 NoKappa' : ''
   }
 
   public render() {
-    const { value } = this.state
+    const { value, isFirstCommand } = this.state
     const { type } = this.props
     const isPost = type === CLIResponseType.StartPost
     return (
@@ -64,7 +66,7 @@ export class TTYInput extends React.Component<Props, State> {
               id="tty__input"
               autoFocus
               autoComplete="off"
-              placeholder="help"
+              placeholder={isFirstCommand ? 'help' : ''}
               spellCheck={false}
               type="text"
               value={value}
@@ -85,6 +87,6 @@ export class TTYInput extends React.Component<Props, State> {
       (this.props.type === CLIResponseType.StartPost ? 'addpost ' : '') +
       this.state.value
     this.props.onSubmit(valueToSubmit)
-    this.setState({ value: '' })
+    this.setState({ isFirstCommand: false, value: '' })
   }
 }

@@ -2,7 +2,7 @@ import * as React from 'react'
 import { CLIResponseType } from '../models'
 import { TTYInput } from './TTYInput'
 
-const DELAY = 100
+const DELAY = 75
 const SLOW_CHARS = new Set(['.', ',', '\n'])
 
 export interface Props {
@@ -11,23 +11,14 @@ export interface Props {
   onSubmit: (value: string) => void
 }
 
-export class TTY extends React.Component<
-  Props,
-  { clicked: boolean; showInput: boolean }
-> {
-  public state = { clicked: false, showInput: false }
-  private timer: number
-
-  public componentWillUnmount() {
-    window.clearTimeout(this.timer)
-  }
-
+export class TTY extends React.Component<Props, { clicked: boolean }> {
+  public state = { clicked: false }
   public render() {
     const { type } = this.props
     return (
       <div
         className={`tty ${this.state.clicked &&
-          (type === CLIResponseType.StartPost || true
+          (type === CLIResponseType.StartPost
             ? 'tty--posting'
             : 'tty--clicked')}`}
         onClick={this.showInput}
@@ -37,25 +28,12 @@ export class TTY extends React.Component<
         data-testid="tty"
       >
         <TTYOutput type={type}>{this.props.children}</TTYOutput>
-        {this.state.showInput && (
-          <TTYInput onSubmit={this.props.onSubmit} type={type} />
-        )}
+        {<TTYInput onSubmit={this.props.onSubmit} type={type} />}
       </div>
     )
   }
 
-  private showInput = () => {
-    if (this.timer) {
-      return
-    }
-
-    this.timer = window.setTimeout(
-      () => this.setState({ showInput: true }),
-      300
-    )
-
-    this.setState({ clicked: true })
-  }
+  private showInput = () => this.setState({ clicked: true })
 }
 
 interface TTYOutputProps {
@@ -77,16 +55,13 @@ export class TTYOutput extends React.Component<
   }
 
   public render() {
+    const { type } = this.props
     return (
       <div
         className={`tty__output ${
-          this.props.type === CLIResponseType.Error ? 'tty__output--error' : ''
-        } ${
-          this.props.type === CLIResponseType.Info ? 'tty__output--info' : ''
-        } ${
-          this.props.type === CLIResponseType.Success
-            ? 'tty__output--success'
-            : ''
+          type === CLIResponseType.Error ? 'tty__output--error' : ''
+        } ${type === CLIResponseType.Info ? 'tty__output--info' : ''} ${
+          type === CLIResponseType.Success ? 'tty__output--success' : ''
         }`}
       >
         {(this.props.children as string[])

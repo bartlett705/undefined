@@ -10,9 +10,9 @@ class App extends React.Component<
 > {
   public state = {
     ttyContent: [
-      '> HeyoThere, barleysauce... \n',
-      '> Not much to see here yet \n',
-      '> But maybe, there will be stuff...at some point. \n'
+      '> HeyGuys, this is a website, by Ahmad.  \n',
+      '> Not a whole lot to see here yet...  \n',
+      '> But you could always sign the guestbook 👇 ^_^  \n'
     ],
     ttyType: CLIResponseType.Standard
   }
@@ -50,8 +50,8 @@ class App extends React.Component<
 
       switch (res.status) {
         case 200:
-           ({ content: ttyContent, type: ttyType } = await res.json())
-           break
+          ({ content: ttyContent, type: ttyType } = await res.json())
+          break
       }
     } catch (err) {
       // tslint:disable-next-line:no-console
