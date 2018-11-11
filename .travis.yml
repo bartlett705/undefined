@@ -1,28 +1,28 @@
 env:
   global:
-  - SFTP_USER=travis
+    - SFTP_USER=travis
 sudo: false
 language: node_js
 cache:
   directories:
-  - "~/.npm"
-  - "~/.cache"
+    - '~/.npm'
+    - '~/.cache'
 notifications:
   email: false
 node_js:
-- '10.8'
+  - '10.8'
 install: npm i
 jobs:
   include:
-  - stage: build
-    script:
-    - npm run build
+    - stage: build
+      script:
+        - npm run build
 after_success:
-- curl --ftp-create-dirs -T ./build/*.* --key ./ci/travis_ci_rsa sftp://${SFTP_USER}:@mosey.systems/var/www/undefined/html
+  - curl --ftp-create-dirs -T ./build/*.* --key ./ci/travis_ci_rsa sftp://${SFTP_USER}:@mosey.systems/var/www/undefined/html
 branches:
   only: master
 before_install:
-- openssl aes-256-cbc -K $encrypted_1364afca9c50_key -iv $encrypted_1364afca9c50_iv
-  -in travis_ci_rsa.enc -out ./ci/travis_ci_rsa -d
-- openssl aes-256-cbc -K $encrypted_1364afca9c50_key -iv $encrypted_1364afca9c50_iv
-  -in config.ts.enc -out ./src/config.ts -d
+  - openssl aes-256-cbc -K $encrypted_1364afca9c50_key -iv $encrypted_1364afca9c50_iv
+    -in travis_ci_rsa.enc -out ./ci/travis_ci_rsa -d
+  - openssl aes-256-cbc -K $encrypted_1364afca9c50_key -iv $encrypted_1364afca9c50_iv
+    -in config.ts.enc -out ./src/config.ts -d
