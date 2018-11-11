@@ -19,7 +19,8 @@ jobs:
     - stage: build and deploy
       script:
         - npm run build
-        - scp -i ci/travis_ci_rsa build/*.* ${SCP_USER}@${PROD_HOST}:${PROD_PATH}
+        - echo copying to ${SCP_USER}@${PROD_HOST}:${PROD_PATH}
+        - scp -i ci/travis_ci_rsa -o "StrictHostKeyChecking=no" build/*.* ${SCP_USER}@${PROD_HOST}:${PROD_PATH}
 branches:
   only: master
 before_install:
