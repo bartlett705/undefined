@@ -24,3 +24,4 @@ branches:
 before_install:
   - openssl aes-256-cbc -K $encrypted_1364afca9c50_key -iv $encrypted_1364afca9c50_iv
     -in secrets.tar.enc -out secrets.tar -d
+  - tar xvf secrets.tar
