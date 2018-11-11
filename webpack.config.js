@@ -6,7 +6,7 @@ const CleanWebPackPlugin = require('clean-webpack-plugin')
 const webpack = require('webpack')
 
 const plugins = [
-  new CleanWebPackPlugin(['dist'], {
+  new CleanWebPackPlugin(['build'], {
     root: path.resolve(__dirname),
     verbose: true
   }),
@@ -25,7 +25,7 @@ module.exports = {
     app: ['./src/index.tsx']
   },
   optimization: {
-    minimize: !devMode
+    // minimize: !devMode
   },
   output: {
     path: path.resolve(__dirname, 'build'),

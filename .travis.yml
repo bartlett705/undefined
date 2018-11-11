@@ -1,42 +1,28 @@
 env:
   global:
-    - 'SFTP_USER=travis'
+    - SFTP_USER=travis
 sudo: false
 language: node_js
 cache:
   directories:
-    - ~/.npm
-    - ~/.cache
-
+    - '~/.npm'
+    - '~/.cache'
 notifications:
   email: false
 node_js:
   - '10.8'
 install: npm i
-
 jobs:
   include:
-    - stage: unit tests
-      script: npx jest
-    # - stage: automation tests
-    #   script:
-    #     # print all Travis environment variables for debugging
-    #     - $(npm bin)/print-env TRAVIS
-    #     - npm start -- --silent &
-    #     - npx cypress run
-    #     # after all tests finish running we need
-    #     # to kill all background jobs (like "npm start &")
-    #     - kill $(jobs -p) || true
     - stage: build
       script:
         - npm run build
-
 after_success:
-  - curl --ftp-create-dirs -T ./build/*.* --key ./travis_ci_rsa sftp://${SFTP_USER}:@mosey.systems/var/www/undefined/html
-
+  - curl --ftp-create-dirs -T ./build/*.* --key ./ci/travis_ci_rsa sftp://${SFTP_USER}:@mosey.systems/var/www/undefined/html
 branches:
   only: master
-
 before_install:
   - openssl aes-256-cbc -K $encrypted_1364afca9c50_key -iv $encrypted_1364afca9c50_iv
-    -in travis_ci_rsa.enc -out ./travis_ci_rsa -d
+    -in ./ci/travis_ci_rsa.enc -out ci/travis_ci_rsa -d
+  - openssl aes-256-cbc -K $encrypted_1364afca9c50_key -iv $encrypted_1364afca9c50_iv
+    -in ./src/config.ts.enc -out src/config.ts -d

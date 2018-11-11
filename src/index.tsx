@@ -12,7 +12,7 @@ class App extends React.Component<
     ttyContent: [
       '> HeyGuys, this is a website, by Ahmad.  \n',
       '> Not a whole lot to see here yet...  \n',
-      '> But you could always sign the guestbook 👇 ^_^  \n'
+      '> But you could always sign the guestbook ^_^  \n'
     ],
     ttyType: CLIResponseType.Standard
   }
@@ -34,7 +34,7 @@ class App extends React.Component<
 
   private onSubmit = async (input: string) => {
     let { ttyContent, ttyType } = {
-      ttyContent: ['Unrecognized Server Response 🙁'],
+      ttyContent: ['Unrecognized Server Response \u1F641'],
       ttyType: CLIResponseType.Error
     }
 

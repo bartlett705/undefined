@@ -15,6 +15,7 @@ node_modules/
 .npm
 src/config.ts
 package-lock.json
+travis.log
 
 # Testing
 coverage
