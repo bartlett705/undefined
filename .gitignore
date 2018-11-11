@@ -17,6 +17,7 @@ src/config.ts
 secrets.tar
 package-lock.json
 travis.log
+ci/travis_ci_rsa
 
 # Testing
 coverage

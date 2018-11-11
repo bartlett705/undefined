@@ -16,6 +16,17 @@ node_js:
 install: npm i
 jobs:
   include:
+    - stage: unit tests
+      script: npx jest
+    - stage: automation tests
+      script:
+        # print all Travis environment variables for debugging
+        # - $(npm bin)/print-env TRAVIS
+        - npm start -- --silent &
+        - npx cypress run
+        # after all tests finish running we need
+        # to kill all background jobs (like "npm start &")
+        - kill $(jobs -p) || true
     - stage: build and deploy
       script:
         - npm run build
