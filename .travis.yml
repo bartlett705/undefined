@@ -1,6 +1,8 @@
 env:
   global:
-    - SFTP_USER=travis
+    - SCP_USER=ci
+    - PROD_HOST=mosey.systems
+    - PROD_PATH=/var/www/undefined/html
 sudo: false
 language: node_js
 cache:
@@ -14,11 +16,10 @@ node_js:
 install: npm i
 jobs:
   include:
-    - stage: build
+    - stage: build and deploy
       script:
         - npm run build
-after_success:
-  - curl --ftp-create-dirs -T ./build/*.* --key ./ci/travis_ci_rsa sftp://${SFTP_USER}:@mosey.systems/var/www/undefined/html
+        - scp -i ci/travis_ci_rsa build/*.* ${SCP_USER}@${PROD_HOST}:${PROD_PATH}
 branches:
   only: master
 before_install:
