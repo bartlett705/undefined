@@ -9,3 +9,8 @@ describe('weather', () => {
     cy.get('[data-testid=tty]', { timeout: 5000 }).contains(/oceanside/i)
   })
 })
+
+it.only('enters read mode', () => {
+  cy.getTTYInput().type('read{enter}')
+  cy.get('.reader').contains(/steakhouse/)
+})

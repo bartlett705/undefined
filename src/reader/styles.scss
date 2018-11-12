@@ -1,0 +1,64 @@
+.reader {
+  background-color: #181818;
+  border-radius: 3px;
+  padding: 1rem;
+  margin-top: 1rem;
+  font-size: 0.7rem;
+
+  &__post {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px dashed;
+    align-items: center;
+    padding-bottom: 0.25rem;
+  }
+
+  &__user {
+    background-color: #383838;
+    padding: 0.5rem;
+    border-radius: 3px;
+    max-width: 5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    // position: relative;
+    // display: inline-block;
+
+    // /* Tooltip text */
+    // & .tooltip {
+    //   visibility: hidden;
+    //   overflow: auto;
+    //   background-color: #383838;
+    //   color: #fff;
+    //   text-align: center;
+    //   padding: 5px 0;
+    //   border-radius: 6px;
+
+    //   /* Position the tooltip text - see examples below! */
+    //   position: absolute;
+    //   z-index: 1;
+    //   width: 100%;
+    //   // bottom: 100%;
+    //   left: 0;
+    //   // margin-left: -60px;
+    //   bottom: 10%;
+    // }
+
+    // /* Show the tooltip text when you mouse over the tooltip container */
+    // &:hover .tooltip {
+    //   visibility: visible;
+    // }
+  }
+
+  &__message {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
+
+  &__time {
+    color: #a8a8a8;
+    font-style: italic;
+    font-size: 0.5rem;
+    max-width: 4rem;
+  }
+}
