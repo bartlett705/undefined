@@ -51,7 +51,7 @@ class App extends React.Component<{}, State> {
   private onSubmit = async (input: string) => {
     let { readMode, ttyContent, ttyType, ttyPayload }: Partial<State> = {
       readMode: false,
-      ttyContent: ['Unrecognized Server Response 🙁'],
+      ttyContent: ['Unrecognized Server Response :/  '],
       ttyType: CLIResponseType.Error
     }
 

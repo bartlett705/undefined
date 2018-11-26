@@ -46,7 +46,7 @@ export class TTYInput extends React.Component<Props, State> {
                 className={`post-controls__submit ${value.length > 160 &&
                   'post-controls__submit--disabled'}`}
                 type="submit"
-                value={'📯'}
+                value={'Post'}
                 disabled={value.length > 160}
               />
               <span
