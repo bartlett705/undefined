@@ -1,8 +1,8 @@
 env:
   global:
     - SCP_USER=ci
-    - PROD_HOST=mosey.systems
-    - PROD_PATH=/var/www/undefined/html
+    - PROD_HOST=107.172.210.106
+    - PROD_PATH=/var/www/undefined/build
 sudo: false
 language: node_js
 cache:
