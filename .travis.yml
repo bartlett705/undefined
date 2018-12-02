@@ -23,7 +23,7 @@ jobs:
       script:
         # print all Travis environment variables for debugging
         # - $(npm bin)/print-env TRAVIS
-        - npm start -- --silent &
+        - NODE_ENV=staging npm start -- --silent &
         - npx cypress run
         # after all tests finish running we need
         # to kill all background jobs (like "npm start &")

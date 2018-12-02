@@ -5,6 +5,15 @@
       href="https://fonts.googleapis.com/css?family=Spectral+SC"
       rel="stylesheet"
     />
+    <% if (htmlWebpackPlugin.options.env === 'staging') { %>
+    <script>
+      window.env = 'staging'
+    </script>
+    <% } else { %>
+    <script>
+      window.env = 'production'
+    </script>
+    <% } %>
   </head>
   <body>
     <div id="root"></div>

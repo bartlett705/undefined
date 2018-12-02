@@ -1,6 +1,7 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import '../sass/main.scss'
+import { config } from './config'
 import {
   CLIRequestBody,
   CLIResponse,
@@ -56,7 +57,7 @@ class App extends React.Component<{}, State> {
     }
 
     try {
-      const res = await fetch('https://mosey.systems/api/cli', {
+      const res = await fetch(config.apiURI, {
         body: JSON.stringify(buildBody(input)),
         credentials: 'include',
         headers: {
