@@ -3,6 +3,7 @@ env:
     - SCP_USER=travis
     - PROD_HOST=107.172.210.106
     - PROD_PATH=/var/www/undefined/build
+    - PROD_PORT=5235
 sudo: false
 language: node_js
 cache:
@@ -31,7 +32,7 @@ jobs:
       script:
         - npm run build
         - echo copying to ${SCP_USER}@${PROD_HOST}:${PROD_PATH}
-        - scp -i ci/travis_ci_rsa -o "StrictHostKeyChecking=no" build/*.* ${SCP_USER}@${PROD_HOST}:${PROD_PATH}
+        - scp -i ci/travis_ci_rsa -o "StrictHostKeyChecking=no" -P ${PROD_PORT} build/*.* ${SCP_USER}@${PROD_HOST}:${PROD_PATH}
 branches:
   only: master
 before_install:
