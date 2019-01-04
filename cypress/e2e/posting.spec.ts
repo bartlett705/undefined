@@ -17,7 +17,7 @@ describe('Posting', () => {
   })
 
   it('shows post input', () => {
-    cy.login('steakouse')
+    cy.login('steakhouse')
     cy.getTTYInput().type('post{enter}')
     cy.contains(/what have you got/i)
   })
@@ -43,5 +43,11 @@ describe('Posting', () => {
       cy.get('input').click()
       cy.contains(/your thoughts/i)
     })
+  })
+
+  it('enters read mode', () => {
+    cy.getTTYInput().type('read{enter}')
+    cy.get('[data-testid=tty]').contains(/read mode/i)
+    cy.get('.reader').contains(/steakhou/)
   })
 })

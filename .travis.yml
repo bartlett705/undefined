@@ -1,8 +1,9 @@
 env:
   global:
-    - SCP_USER=ci
-    - PROD_HOST=mosey.systems
-    - PROD_PATH=/var/www/undefined/html
+    - SCP_USER=travis
+    - PROD_HOST=107.172.210.106
+    - PROD_PATH=/var/www/undefined/build
+    - PROD_PORT=5235
 sudo: false
 language: node_js
 cache:
@@ -12,7 +13,7 @@ cache:
 notifications:
   email: false
 node_js:
-  - '10.8'
+  - '11.3'
 install: npm i
 jobs:
   include:
@@ -22,7 +23,7 @@ jobs:
       script:
         # print all Travis environment variables for debugging
         # - $(npm bin)/print-env TRAVIS
-        - npm start -- --silent &
+        - NODE_ENV=staging npm start -- --silent &
         - npx cypress run
         # after all tests finish running we need
         # to kill all background jobs (like "npm start &")
@@ -31,10 +32,9 @@ jobs:
       script:
         - npm run build
         - echo copying to ${SCP_USER}@${PROD_HOST}:${PROD_PATH}
-        - scp -i ci/travis_ci_rsa -o "StrictHostKeyChecking=no" build/*.* ${SCP_USER}@${PROD_HOST}:${PROD_PATH}
+        - scp -i ci/travis_ci_rsa -o "StrictHostKeyChecking=no" -P ${PROD_PORT} build/*.* ${SCP_USER}@${PROD_HOST}:${PROD_PATH}
 branches:
   only: master
 before_install:
-  - openssl aes-256-cbc -K $encrypted_1364afca9c50_key -iv $encrypted_1364afca9c50_iv
-    -in secrets.tar.enc -out secrets.tar -d
+  - openssl aes-256-cbc -K $encrypted_1364afca9c50_key -iv $encrypted_1364afca9c50_iv -in secrets.tar.enc -out secrets.tar -d
   - tar xvf secrets.tar

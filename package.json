@@ -1,11 +1,13 @@
 {
   "name": "undefined",
   "version": "1.0.0",
+  "author": "Ahmad Kanawi",
+  "license": "ISC",
   "scripts": {
     "build": "NODE_ENV=production webpack",
     "start": "webpack-dev-server",
     "test": "jest --watch",
-    "deploy": "yarn build && scp -i ci/travis_ci_rsa build/*.* ci@mosey.systems:/var/www/undefined/html"
+    "deploy": "yarn build && scp -i ci/travis_ci_rsa build/*.* travis@mosey.systems:/var/www/undefined/build"
   },
   "dependencies": {
     "@types/dotenv": "^4.0.3",
@@ -30,7 +32,7 @@
     "@types/jest": "^23.3.9",
     "@types/jest-axe": "^2.2.2",
     "@types/react-dom": "^16.0.7",
-    "cypress": "^3.1.1",
+    "cypress": "^3.1.2",
     "jest": "^23.6.0",
     "jest-axe": "^3.1.0",
     "prettier": "^1.14.3",

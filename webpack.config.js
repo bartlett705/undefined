@@ -15,7 +15,8 @@ const plugins = [
     chunkFilename: devMode ? '[id].css' : '[id].[hash].css'
   }),
   new HtmlWebpackPlugin({
-    template: path.resolve(__dirname, 'index.html')
+    template: path.resolve(__dirname, 'index.html'),
+    env: process.env.NODE_ENV
   })
 ]
 module.exports = {
