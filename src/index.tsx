@@ -56,7 +56,7 @@ class App extends React.Component<{}, State> {
     }
 
     try {
-      const res = await fetch('https://mosey.systems/api/cli', {
+      const res = await fetch('/api/cli', {
         body: JSON.stringify(buildBody(input)),
         credentials: 'include',
         headers: {

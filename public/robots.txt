@@ -1,0 +1,8 @@
+User-agent: SemrushBot
+Disallow: / 
+
+User-agent: YandexBot # will be used only by the main indexing robot
+Disallow: /
+
+User-agent: Yandex # will be used by all Yandex robots
+Disallow: / # except for the main indexing robot
