@@ -7,6 +7,7 @@ const SLOW_CHARS = new Set(['.', ',', '\n'])
 
 export interface Props {
   children: string[]
+  cancelPost: () => void
   type: CLIResponseType
   onSubmit: (value: string) => void
 }
@@ -14,7 +15,7 @@ export interface Props {
 export class TTY extends React.Component<Props, { clicked: boolean }> {
   public state = { clicked: false }
   public render() {
-    const { type } = this.props
+    const { cancelPost, type } = this.props
     return (
       <div
         className={`tty ${this.state.clicked &&
@@ -28,7 +29,13 @@ export class TTY extends React.Component<Props, { clicked: boolean }> {
         data-testid="tty"
       >
         <TTYOutput type={type}>{this.props.children}</TTYOutput>
-        {<TTYInput onSubmit={this.props.onSubmit} type={type} />}
+        {
+          <TTYInput
+            onSubmit={this.props.onSubmit}
+            cancelPost={cancelPost}
+            type={type}
+          />
+        }
       </div>
     )
   }

@@ -6,6 +6,7 @@ import { CLIResponseType } from '../../models'
 import { Props, TTYInput } from '../TTYInput'
 
 const defaultProps = () => ({
+  cancelPost: jest.fn(),
   onSubmit: jest.fn(),
   type: CLIResponseType.Standard
 })

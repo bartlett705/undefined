@@ -4,6 +4,7 @@ import { setupTest } from '../../../test'
 import { CLIResponseType } from '../../models'
 
 const defaultProps = () => ({
+  cancelPost: jest.fn(),
   children: ['some  ', 'garbage  ', 'LUL  '],
   onSubmit: jest.fn(),
   type: CLIResponseType.Standard

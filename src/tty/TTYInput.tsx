@@ -2,6 +2,7 @@ import * as React from 'react'
 import { CLIResponseType } from '../models'
 
 export interface Props {
+  cancelPost: () => void
   onSubmit: (value: State['value']) => void
   type: CLIResponseType
 }
@@ -20,7 +21,7 @@ export class TTYInput extends React.Component<Props, State> {
 
   public render() {
     const { value, isFirstCommand } = this.state
-    const { type } = this.props
+    const { cancelPost, type } = this.props
     const isPost = type === CLIResponseType.StartPost
     return (
       <form
@@ -49,6 +50,9 @@ export class TTYInput extends React.Component<Props, State> {
                 value={'Post'}
                 disabled={value.length > 160}
               />
+              <button className="post-controls__cancel" onClick={cancelPost}>
+                Cancel
+              </button>
               <span
                 className={`char-count ${value.length > 130 &&
                   'char-count--warning'} ${value.length > 160 &&
