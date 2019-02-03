@@ -112,12 +112,19 @@ main {
   align-items: center;
   display: flex;
   flex-direction: column;
-
+  &__cancel,
   &__submit {
     cursor: pointer;
     margin-bottom: 0.5rem;
-    border-width: 0px;
     border-radius: 5px;
+    width: 100%;
+    border-width: 0px;
+  }
+  &__cancel {
+    background-color: darkred;
+  }
+
+  &__submit {
     background-color: royalblue;
     color: black;
 

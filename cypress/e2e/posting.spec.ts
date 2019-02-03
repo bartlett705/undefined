@@ -22,7 +22,15 @@ describe('Posting', () => {
     cy.contains(/what have you got/i)
   })
 
+  it('has a cancel button', () => {
+    cy.get('button')
+      .contains(/cancel/i)
+      .click()
+    cy.contains(/nevermind/i)
+  })
+
   it('does not allow long posts', () => {
+    cy.getTTYInput().type('post{enter}')
     cy.get('textarea').type(lotsOfJunk())
     cy.get('input')
       .should('have.attr', 'role', 'button')
@@ -49,5 +57,6 @@ describe('Posting', () => {
     cy.getTTYInput().type('read{enter}')
     cy.get('[data-testid=tty]').contains(/read mode/i)
     cy.get('.reader').contains(/steakhou/)
+    cy.logout()
   })
 })

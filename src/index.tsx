@@ -37,7 +37,11 @@ class App extends React.Component<{}, State> {
           <h1>A website by Ahmad</h1>
         </header>
         <main>
-          <TTY type={this.state.ttyType} onSubmit={this.onSubmit}>
+          <TTY
+            type={this.state.ttyType}
+            cancelPost={this.cancelPost}
+            onSubmit={this.onSubmit}
+          >
             {this.state.ttyContent}
           </TTY>
           {this.state.readMode &&
@@ -47,6 +51,13 @@ class App extends React.Component<{}, State> {
         </main>
       </>
     )
+  }
+
+  private cancelPost = () => {
+    this.setState({
+      ttyContent: ['Alrighty...nevermind, then.  '],
+      ttyType: CLIResponseType.Standard
+    })
   }
 
   private onSubmit = async (input: string) => {
