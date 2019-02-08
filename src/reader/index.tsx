@@ -11,7 +11,7 @@ const formatName = (id: string, name: string) => `${name}-${id.slice(0, 6)}`
 
 export const Reader: React.SFC<ReaderProps> = ({ posts }) => {
   if (!posts) {
-    return <div>SOMETHING WENT WRONG :(</div>
+    return <div>SOMETHING WENT WRONG 😭</div>
   }
 
   if (posts.length === 0) {

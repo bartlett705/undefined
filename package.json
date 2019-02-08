@@ -7,7 +7,7 @@
     "build": "NODE_ENV=production webpack",
     "start": "webpack-dev-server",
     "test": "jest --watch",
-    "deploy": "yarn build && scp -i ci/travis_ci_rsa build/*.* travis@mosey.systems:/var/www/undefined/build"
+    "deploy": "yarn build && scp -P 5235 build/*.* ahmad@mosey.systems:/var/www/undefined/build"
   },
   "dependencies": {
     "date-fns": "^2.0.0-alpha.25",

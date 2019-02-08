@@ -23,7 +23,7 @@ class App extends React.Component<{}, State> {
   public readonly state: State = {
     readMode: false,
     ttyContent: [
-      '> HeyGuys, this is a website, by Ahmad.  \n',
+      '> Howdy 👋 this is a website, by Ahmad.  \n',
       '> Not a whole lot to see here yet...  \n',
       '> But you could always sign the guestbook ^_^  \n'
     ],
@@ -63,7 +63,7 @@ class App extends React.Component<{}, State> {
   private onSubmit = async (input: string) => {
     let { readMode, ttyContent, ttyType, ttyPayload }: Partial<State> = {
       readMode: false,
-      ttyContent: ['Unrecognized Server Response :/  '],
+      ttyContent: ['Unrecognized Server Response 😭 '],
       ttyType: CLIResponseType.Error
     }
 
@@ -89,7 +89,7 @@ class App extends React.Component<{}, State> {
     } catch (err) {
       // tslint:disable-next-line:no-console
       console.warn(err)
-      ttyContent = ['Network Error. Could not reach remote system.  ']
+      ttyContent = ['Network Error. Could not reach remote system. 😭 ']
     }
 
     if (ttyPayload && ttyPayload.type === PayloadType.Posts) {
