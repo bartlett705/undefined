@@ -2,32 +2,32 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import '../sass/main.scss'
 import { config } from './config'
-import {
-  CLIRequestBody,
-  CLIResponse,
-  CLIResponseType,
-  Payload,
-  PayloadType
-} from './models'
+import { CLIRequestBody, CLIResponseType, Payload, PayloadType } from './models'
 import { Reader } from './reader'
 import { TTY } from './tty'
+
+const loadingContent = ['...  ', '....  ', '.....  ']
+
+const initialContent = [
+  '> Howdy 👋 this is a website, by Ahmad.  \n',
+  '> Not a whole lot to see here yet...  \n',
+  '> But you could always sign the guestbook ^_^  \n'
+]
 
 interface State {
   readMode: boolean
   ttyContent: string[]
   ttyType: CLIResponseType
   ttyPayload?: Payload
+  working: boolean
 }
 
 class App extends React.Component<{}, State> {
   public readonly state: State = {
     readMode: false,
-    ttyContent: [
-      '> Howdy 👋 this is a website, by Ahmad.  \n',
-      '> Not a whole lot to see here yet...  \n',
-      '> But you could always sign the guestbook ^_^  \n'
-    ],
-    ttyType: CLIResponseType.Standard
+    ttyContent: initialContent,
+    ttyType: CLIResponseType.Standard,
+    working: false
   }
 
   public render() {
@@ -42,7 +42,7 @@ class App extends React.Component<{}, State> {
             cancelPost={this.cancelPost}
             onSubmit={this.onSubmit}
           >
-            {this.state.ttyContent}
+            {this.state.working ? loadingContent : this.state.ttyContent}
           </TTY>
           {this.state.readMode &&
             this.state.ttyPayload && (
@@ -61,10 +61,12 @@ class App extends React.Component<{}, State> {
   }
 
   private onSubmit = async (input: string) => {
+    this.setState({ working: true })
     let { readMode, ttyContent, ttyType, ttyPayload }: Partial<State> = {
       readMode: false,
       ttyContent: ['Unrecognized Server Response 😭 '],
-      ttyType: CLIResponseType.Error
+      ttyType: CLIResponseType.Error,
+      working: false
     }
 
     try {
@@ -96,7 +98,7 @@ class App extends React.Component<{}, State> {
       readMode = true
     }
 
-    this.setState({ readMode, ttyContent, ttyType, ttyPayload })
+    this.setState({ readMode, ttyContent, ttyType, ttyPayload, working: false })
   }
 }
 
