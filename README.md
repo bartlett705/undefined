@@ -1,6 +1,6 @@
 # undefined
 
-![Build status](https://travis-ci.org/bartlett705/undefined.svg?branch=master)
+Hosted at https://mosey.systems
 
 Muh website circa 2017/2018
 
