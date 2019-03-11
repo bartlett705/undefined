@@ -1,4 +1,3 @@
-import { config } from '../../src/config'
 import { lotsOfJunk } from '../../test/utils'
 
 describe('Posting', () => {
@@ -40,7 +39,7 @@ describe('Posting', () => {
 
   it('makes posts', () => {
     const url = `https://newsapi.org/v2/top-headlines?sources=ars-technica&apiKey=${
-      config.newsAPIKey
+      Cypress.env('NEWS_API_KEY')
     }`
     cy.request(url).then((resp) => {
       let content = '*widely beloved discourse*'

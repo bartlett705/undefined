@@ -6,20 +6,26 @@ const CleanWebPackPlugin = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const plugins = [
-  new CleanWebPackPlugin(['build'], {
-    root: path.resolve(__dirname),
-    verbose: true
-  }),
-  new CopyWebpackPlugin([{ from: 'public/', to: '.' }]),
-  new MiniCssExtractPlugin({
-    filename: devMode ? '[name].css' : '[name].[hash].css',
-    chunkFilename: devMode ? '[id].css' : '[id].[hash].css'
-  }),
   new HtmlWebpackPlugin({
     template: path.resolve(__dirname, 'index.html'),
     env: process.env.NODE_ENV
   })
 ]
+
+if (!devMode) {
+  plugins.push([
+    new CleanWebPackPlugin(['build'], {
+      root: path.resolve(__dirname),
+      verbose: true
+    }),
+    new CopyWebpackPlugin([{ from: 'public/', to: '.' }]),
+    new MiniCssExtractPlugin({
+      filename: devMode ? '[name].css' : '[name].[hash].css',
+      chunkFilename: devMode ? '[id].css' : '[id].[hash].css'
+    }),
+  ])
+}
+
 module.exports = {
   mode: devMode ? 'development' : 'production',
   plugins,
