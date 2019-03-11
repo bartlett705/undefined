@@ -5,7 +5,7 @@ workflow "Test, build, deploy on push" {
 
 action "Notify Start" {
   uses = "swinton/httpie.action@8ab0a0e926d091e0444fcacd5eb679d2e2d4ab3d"
-  args = ["POST", "https://discordapp.com/api/webhooks/$DC_ID/$DC_TOKEN", "username=GitHub", "content='Undefined push received :+1'"]
+  args = ["POST", "https://discordapp.com/api/webhooks/$DC_ID/$DC_TOKEN", "username=GitHub", "content='Undefined push received :+1:'"]
   secrets = ["DC_ID", "DC_TOKEN"]
 }
 
@@ -21,7 +21,7 @@ action "Unit Tests" {
 }
 
 action "Automation Tests" {
-  uses = "actions/npm@59b64a598378f31e49cb76f27d6f3312b582f680"
+  uses = "bartlett705/npm-cy@a40d1c0658bd04cf6b5e49cb608181fe3d2c15c2"
   needs = ["Unit Tests"]
   args = "run cy:run"
 }
