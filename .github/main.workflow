@@ -24,7 +24,10 @@ action "Automation Tests" {
   uses = "bartlett705/npm-cy@f69478046d80aef1be0e17582c189a59bbfc9aa1"
   needs = ["Unit Tests"]
   args = "run cy:run"
-  secrets = ["CONFIG_KEY"]
+  secrets = [
+    "CONFIG_KEY",
+    "CYPRESS_NEWS_API_KEY",
+  ]
 }
 
 action "Notify End" {
