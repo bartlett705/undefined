@@ -21,7 +21,7 @@ action "Unit Tests" {
 }
 
 action "Automation Tests" {
-  uses = "bartlett705/npm-cy@a40d1c0658bd04cf6b5e49cb608181fe3d2c15c2"
+  uses = "bartlett705/npm-cy@366ebcd420a9c02e3e316c9eef09adbce65a726a"
   needs = ["Unit Tests"]
   args = "run cy:run"
 }
