@@ -1,4 +1,5 @@
 if [ -n "$CONFIG_KEY" ]; then 
+  openssl --list-ciphers
   openssl enc -aes-256-cbc -d -in secrets.tar.enc -out secrets.tar -k $CONFIG_KEY
   tar -xvf secrets.tar
 fi
