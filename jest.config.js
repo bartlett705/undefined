@@ -6,5 +6,5 @@ module.exports = {
   },
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
-  setupTestFrameworkScriptFile: './test/setup.ts'
+  setupFilesAfterEnv: ['./test/setup.ts']
 }

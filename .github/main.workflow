@@ -1,6 +1,6 @@
 workflow "Test, build, deploy on push" {
   on = "push"
-  resolves = ["Notify in Discord", "GitHub Action for npm-1"]
+  resolves = ["Notify in Discord", "unit tests"]
 }
 
 action "Notify in Discord" {
@@ -9,14 +9,13 @@ action "Notify in Discord" {
   secrets = ["DC_ID", "DC_TOKEN"]
 }
 
-action "GitHub Action for npm" {
+action "npm install" {
   uses = "actions/npm@59b64a598378f31e49cb76f27d6f3312b582f680"
-  needs = ["Notify in Discord"]
   args = "install"
 }
 
-action "GitHub Action for npm-1" {
+action "unit tests" {
   uses = "actions/npm@59b64a598378f31e49cb76f27d6f3312b582f680"
-  needs = ["GitHub Action for npm"]
+  needs = ["npm install"]
   args = "test"
 }
