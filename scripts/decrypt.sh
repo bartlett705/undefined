@@ -1,6 +1,5 @@
 echo Starting Decrypt...
-openssl help
-openssl enc -aes-256-cbc -d -in secrets.tar.enc -out secrets.tar -k $CONFIG_KEY
+openssl enc -aes-256-cbc -d -in secrets.tar.enc -out secrets.tar -K $CONFIG_KEY -iv $CONFIG_IV
 echo Extracting...
 tar -xvf secrets.tar
 ls -al ci
