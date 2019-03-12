@@ -27,6 +27,7 @@ action "Automation Tests" {
   secrets = [
     "CONFIG_KEY",
     "CYPRESS_NEWS_API_KEY",
+    "TRAVIS_RSA",
   ]
 }
 
