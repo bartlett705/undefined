@@ -34,6 +34,17 @@ action "Deploy" {
   uses = "bartlett705/npm-cy@817d541139ca06add505f5a48364f806b3c9ef44"
   needs = ["Unit Tests"]
   args = "run deploy:ci"
+  secrets = ["CONFIG_KEY"]
+
+  # action "Automation Tests" {
+  #   uses = "bartlett705/npm-cy@f69478046d80aef1be0e17582c189a59bbfc9aa1"
+  #   needs = ["Unit Tests"]
+  #   args = "run cy:run"
+  #   secrets = [
+  #     "CONFIG_KEY",
+  #     "CYPRESS_NEWS_API_KEY",
+  #   ]
+  # }
 }
 
 action "Notify End" {
