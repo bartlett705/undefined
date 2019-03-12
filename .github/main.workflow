@@ -34,9 +34,7 @@ action "Deploy" {
   uses = "bartlett705/npm-cy@817d541139ca06add505f5a48364f806b3c9ef44"
   needs = ["Install"]
   args = "run deploy:ci"
-  secrets = [
-    "CONFIG_KEY",
-  ]
+  secrets = ["CONFIG_KEY"]
 }
 
 action "Notify End" {
