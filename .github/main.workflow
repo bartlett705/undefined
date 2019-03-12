@@ -1,6 +1,6 @@
 workflow "Test, build, deploy on push" {
-  on = "push"
   resolves = ["Notify Start", "Notify End"]
+  on = "push"
 }
 
 action "Notify Start" {
@@ -32,7 +32,7 @@ action "Unit Tests" {
 
 action "Deploy" {
   uses = "actions/npm@59b64a598378f31e49cb76f27d6f3312b582f680"
-  needs = ["Unit tests"]
+  needs = ["Unit Tests"]
   args = "run deploy:ci"
   secrets = [
     "TRAVIS_RSA",
