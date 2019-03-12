@@ -20,13 +20,21 @@ action "Unit Tests" {
   args = "test"
 }
 
-action "Automation Tests" {
-  uses = "bartlett705/npm-cy@f69478046d80aef1be0e17582c189a59bbfc9aa1"
-  needs = ["Unit Tests"]
-  args = "run cy:run"
+# action "Automation Tests" {
+#   uses = "bartlett705/npm-cy@f69478046d80aef1be0e17582c189a59bbfc9aa1"
+#   needs = ["Unit Tests"]
+#   args = "run cy:run"
+#   secrets = [
+#     "CONFIG_KEY",
+#     "CYPRESS_NEWS_API_KEY",
+#   ]
+# }
+
+action "Deploy" {
+  uses = "actions/npm@59b64a598378f31e49cb76f27d6f3312b582f680"
+  needs = ["Unit tests"]
+  args = "run deploy:ci"
   secrets = [
-    "CONFIG_KEY",
-    "CYPRESS_NEWS_API_KEY",
     "TRAVIS_RSA",
   ]
 }

@@ -15,7 +15,7 @@ node_modules/
 .npm
 secrets.tar
 travis.log
-ci/travis_ci_rsa
+travis_*
 
 # Testing
 coverage
