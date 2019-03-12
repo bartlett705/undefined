@@ -9,7 +9,7 @@
     "test": "jest",
     "cy:run": "scripts/cy-run.sh",
     "deploy": "npm run build && scp -P 5235 build/*.* travis@mosey.systems:/var/www/undefined/build",
-    "deploy:ci": "scripts/deploy-ci.sh"
+    "deploy:ci": "scripts/decrypt.sh"
   },
   "dependencies": {
     "date-fns": "^2.0.0-alpha.25",
