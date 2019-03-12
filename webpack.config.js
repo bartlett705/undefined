@@ -13,7 +13,7 @@ const plugins = [
 ]
 
 if (!devMode) {
-  plugins.push([
+  plugins.push(
     new CleanWebPackPlugin(['build'], {
       root: path.resolve(__dirname),
       verbose: true
@@ -23,7 +23,7 @@ if (!devMode) {
       filename: devMode ? '[name].css' : '[name].[hash].css',
       chunkFilename: devMode ? '[id].css' : '[id].[hash].css'
     }),
-  ])
+  )
 }
 
 module.exports = {
@@ -38,7 +38,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'build'),
     publicPath: '/',
-    filename: 'bundle.js'
+    filename: 'bundle.[hash].js'
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js']
