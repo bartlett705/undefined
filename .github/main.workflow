@@ -1,5 +1,5 @@
 workflow "Test, build, deploy on push" {
-  resolves = ["Notify Start, Notify End"]
+  resolves = ["Notify Start", "Notify End"]
   on = "push"
 }
 
