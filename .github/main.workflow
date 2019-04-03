@@ -5,7 +5,7 @@ workflow "Test, build, deploy on push" {
 
 action "Notify Start" {
   uses = "swinton/httpie.action@8ab0a0e926d091e0444fcacd5eb679d2e2d4ab3d"
-  args = ["POST", "https://discordapp.com/api/webhooks/$DC_ID/$DC_TOKEN", "username=GitHub", "content='Undefined push received :+1: $GITHUB_SHA'"]
+  args = ["POST", "https://discordapp.com/api/webhooks/$DC_ID/$DC_TOKEN", "username=GitHub", "content='`undefined` push received :+1: $GITHUB_SHA'"]
   secrets = ["DC_ID", "DC_TOKEN"]
 }
 
@@ -41,5 +41,5 @@ action "Notify End" {
   uses = "swinton/httpie.action@8ab0a0e926d091e0444fcacd5eb679d2e2d4ab3d"
   secrets = ["DC_ID", "DC_TOKEN"]
   needs = ["Deploy"]
-  args = ["POST", "https://discordapp.com/api/webhooks/$DC_ID/$DC_TOKEN", "username=GitHub", "content='Undefined Actions Complete :tada: $GITHUB_SHA'"]
+  args = ["POST", "https://discordapp.com/api/webhooks/$DC_ID/$DC_TOKEN", "username=GitHub", "content='`undefined` Actions Complete :tada: $GITHUB_SHA'"]
 }
