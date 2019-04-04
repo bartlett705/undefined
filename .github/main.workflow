@@ -1,11 +1,22 @@
-workflow "Test, build, deploy on push" {
-  resolves = ["Notify Start", "Notify Deploy End", "Notify Test End"]
+workflow "Master: test, build, deploy" {
+  resolves = ["Notify Deploy End", "Notify Master Start"]
   on = "push"
 }
 
-action "Notify Start" {
+workflow "Branch: test" {
+  resolves = ["Notify Test End", "Notify Branch Start"]
+  on = "push"
+}
+
+action "Filter master" {
+  uses = "actions/bin/filter@master"
+  args = "branch master"
+}
+
+action "Notify Master Start" {
+  needs = ["Filter master"]
   uses = "swinton/httpie.action@8ab0a0e926d091e0444fcacd5eb679d2e2d4ab3d"
-  args = ["POST", "https://discordapp.com/api/webhooks/$DC_ID/$DC_TOKEN", "username=GitHub", "content='`undefined` push received :+1: $GITHUB_SHA'"]
+  args = ["POST", "https://discordapp.com/api/webhooks/$DC_ID/$DC_TOKEN", "username=GitHub", "content='`undefined master` push received :+1: $GITHUB_SHA'"]
   secrets = ["DC_ID", "DC_TOKEN"]
 }
 
@@ -20,15 +31,9 @@ action "Unit Tests" {
   args = "test"
 }
 
-action "Master" {
-  needs = ["Unit Tests"]
-  uses = "actions/bin/filter@master"
-  args = "branch master"
-}
-
 action "Automation Tests" {
   uses = "bartlett705/npm-cy@f69478046d80aef1be0e17582c189a59bbfc9aa1"
-  needs = ["Master"]
+  needs = ["Unit Tests", "Filter master"]
   args = "run cy:run"
   secrets = [
     "CONFIG_KEY",
@@ -50,15 +55,22 @@ action "Notify Deploy End" {
   args = ["POST", "https://discordapp.com/api/webhooks/$DC_ID/$DC_TOKEN", "username=GitHub", "content='`undefined` Deploy Complete :tada: $GITHUB_SHA'"]
 }
 
-action "Not Master" {
+action "Filter not master" {
   needs = ["Unit Tests"]
   uses = "actions/bin/filter@master"
   args = "not branch master"
 }
 
+action "Notify Branch Start" {
+  needs = ["Filter not master"]
+  uses = "swinton/httpie.action@8ab0a0e926d091e0444fcacd5eb679d2e2d4ab3d"
+  args = ["POST", "https://discordapp.com/api/webhooks/$DC_ID/$DC_TOKEN", "username=GitHub", "content='`undefined` branch push received :+1: $GITHUB_SHA'"]
+  secrets = ["DC_ID", "DC_TOKEN"]
+}
+
 action "Notify Test End" {
   uses = "swinton/httpie.action@8ab0a0e926d091e0444fcacd5eb679d2e2d4ab3d"
   secrets = ["DC_ID", "DC_TOKEN"]
-  needs = ["Not Master"]
+  needs = ["Filter not master", "Unit Tests"]
   args = ["POST", "https://discordapp.com/api/webhooks/$DC_ID/$DC_TOKEN", "username=GitHub", "content='`undefined` Test Complete :tada: $GITHUB_SHA'"]
 }
