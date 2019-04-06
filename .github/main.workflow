@@ -56,7 +56,6 @@ action "Notify Deploy End" {
 }
 
 action "Filter not master" {
-  needs = ["Unit Tests"]
   uses = "actions/bin/filter@master"
   args = "not branch master"
 }
