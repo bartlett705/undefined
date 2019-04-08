@@ -13,7 +13,7 @@ const plugins = [
 ]
 
 if (!devMode) {
-  plugins.push(
+  plugins.unshift(
     new CleanWebPackPlugin(['build'], {
       root: path.resolve(__dirname),
       verbose: true

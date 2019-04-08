@@ -22,9 +22,11 @@
   </body>
   <!-- 🙈 -->
   <script>
-    const stag = document.createElement('script')
-    stag.src = "https://chaitown.mosey.systems/charcoal-client/index.js"
-    stag.onload = () => window.trackPageview({ location: "hamsnearme.about" })
-    document.documentElement.appendChild(stag)
+    if (window.env === 'production') {
+      const stag = document.createElement('script')
+      stag.src = "https://chaitown.mosey.systems/charcoal-client/index.js"
+      stag.onload = () => window.trackPageview({ location: "mosey.systems" })
+      document.documentElement.appendChild(stag)
+    }
   </script>
 </html>
