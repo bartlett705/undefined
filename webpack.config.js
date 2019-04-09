@@ -13,17 +13,22 @@ const plugins = [
 ]
 
 if (!devMode) {
-  plugins.unshift(
-    new CleanWebPackPlugin(['build'], {
-      root: path.resolve(__dirname),
-      verbose: true
-    }),
+  plugins.push(
     new CopyWebpackPlugin([{ from: 'public/', to: '.' }]),
     new MiniCssExtractPlugin({
       filename: devMode ? '[name].css' : '[name].[hash].css',
       chunkFilename: devMode ? '[id].css' : '[id].[hash].css'
     }),
   )
+}
+
+if (!devMode && !process.env.GITHUB_SHA) {
+  // don't ask me why, but this runs _AFTER_ the build in ci, no matter where it is in the plugin stack 🤷‍♂
+  // so, we only do this if we're aren't in a github action container... 🙈
+  plugins.push(new CleanWebPackPlugin(['build'], {
+    root: path.resolve(__dirname),
+    verbose: true
+  }))
 }
 
 module.exports = {
