@@ -5,11 +5,11 @@
   "license": "ISC",
   "scripts": {
     "build": "NODE_ENV=production webpack",
+    "build:vanatu": "NODE_ENV=production webpack",
     "start": "webpack-dev-server",
     "test": "jest",
     "cy:run": "scripts/cy-run.sh",
-    "deploy": "npm run build && scp -P 5235 -i ci/travis_id_rsa build/*.* travis@mosey.systems:/var/www/undefined/build",
-    "deploy:ci": "scripts/deploy-ci.sh"
+    "deploy": "npm run build && scp -P 5235 -i ci/travis_id_rsa build/*.* travis@mosey.systems:/var/www/undefined/build"
   },
   "dependencies": {
     "date-fns": "^2.0.0-alpha.25",

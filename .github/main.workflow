@@ -1,5 +1,5 @@
 workflow "Master: test, build, deploy" {
-  resolves = ["Notify Deploy End", "Notify Master Start"]
+  resolves = ["Notify Deploy End", "Notify Master Start", "Deploy"]
   on = "push"
 }
 
@@ -43,15 +43,15 @@ action "Automation Tests" {
 
 action "Deploy" {
   uses = "actions/npm@59b64a598378f31e49cb76f27d6f3312b582f680"
-  needs = ["Automation Tests"]
-  args = "run deploy:ci"
-  secrets = ["CONFIG_KEY", "CONFIG_IV"]
+  # needs = ["Automation Tests"]
+  uses = "swinton/httpie.action@8ab0a0e926d091e0444fcacd5eb679d2e2d4ab3d"
+  args = ["POST", "https://mosey.systems/api/vanatu", "action=completed", "repository=undefined", "X-Hub-Signature:sha1=70e397d4c10930b503226e54cc5e91e291917bc7"]
 }
 
 action "Notify Deploy End" {
   uses = "swinton/httpie.action@8ab0a0e926d091e0444fcacd5eb679d2e2d4ab3d"
   secrets = ["DC_ID", "DC_TOKEN"]
-  needs = ["Deploy"]
+  needs = ["Automation Tests"]
   args = ["POST", "https://discordapp.com/api/webhooks/$DC_ID/$DC_TOKEN", "username=GitHub", "content='`undefined` Deploy Complete :tada: $GITHUB_SHA'"]
 }
 

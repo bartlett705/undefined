@@ -9,7 +9,7 @@ echo "Building Dist Pkg..."
 npm run build \
   && echo "Copying Dist Pkg to remote host..." \
   && ls -al build \
-  && scp -vr -P 5235 -i ci/travis_id_rsa -o UserKnownHostsFile=ci/known_hosts build/. travis@mosey.systems:/var/www/undefined/build \
+  && scp -vr -P 5235 -i ci/travis_id_rsa -o UserKnownHostsFile=ci/known_hosts build/* build/.well-known travis@mosey.systems:/var/www/undefined/build \
   && echo "Cleaning up..." \
-  && rm -rf build ci \
+  && rm -rf ci \
   && echo Done!;
