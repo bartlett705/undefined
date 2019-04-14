@@ -1,6 +1,6 @@
 workflow "Master: test, build, deploy" {
   # resolves = ["Notify Deploy End", "Notify Master Start", "Deploy"]
-  resolves = ["Deploy"]  
+  resolves = ["Deploy"]
   on = "push"
 }
 
@@ -14,12 +14,12 @@ action "Filter master" {
   args = "branch master"
 }
 
-# action "Notify Master Start" {
-#   needs = ["Filter master"]
-#   uses = "swinton/httpie.action@8ab0a0e926d091e0444fcacd5eb679d2e2d4ab3d"
-#   args = ["POST", "https://discordapp.com/api/webhooks/$DC_ID/$DC_TOKEN", "username=GitHub", "content='`undefined master` push received :+1: $GITHUB_SHA'"]
-#   secrets = ["DC_ID", "DC_TOKEN"]
-# }
+action "Notify Master Start" {
+  needs = ["Filter master"]
+  uses = "swinton/httpie.action@8ab0a0e926d091e0444fcacd5eb679d2e2d4ab3d"
+  args = ["POST", "https://discordapp.com/api/webhooks/$DC_ID/$DC_TOKEN", "username=GitHub", "content='`undefined master` push received :+1: $GITHUB_SHA'"]
+  secrets = ["DC_ID", "DC_TOKEN"]
+}
 
 action "Install" {
   uses = "actions/npm@59b64a598378f31e49cb76f27d6f3312b582f680"
@@ -37,7 +37,6 @@ action "Automation Tests" {
   needs = ["Unit Tests", "Filter master"]
   args = "run cy:run"
   secrets = [
-    "CONFIG_KEY",
     "CYPRESS_NEWS_API_KEY",
   ]
 }
@@ -45,7 +44,7 @@ action "Automation Tests" {
 action "Deploy" {
   # needs = ["Automation Tests"]
   uses = "swinton/httpie.action@8ab0a0e926d091e0444fcacd5eb679d2e2d4ab3d"
-  args = ["POST", "https://mosey.systems/api/vanatu", "action=completed", "repository=undefined", "X-Hub-Signature:sha1=70e397d4c10930b503226e54cc5e91e291917bc7"]
+  args = ["POST", "https://mosey.systems/api/vanatu", "action=completed", "repository=undefined", "X-Hub-Signature:$HUB_SIGNATURE"]
 }
 
 action "Notify Deploy End" {
