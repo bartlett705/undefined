@@ -22,9 +22,7 @@ if (!devMode) {
   )
 }
 
-if (!devMode && !process.env.GITHUB_SHA) {
-  // don't ask me why, but this runs _AFTER_ the build in ci, no matter where it is in the plugin stack 🤷‍♂
-  // so, we only do this if we're aren't in a github action container... 🙈
+if (!devMode && !process.env.CI) {
   plugins.push(new CleanWebPackPlugin(['build'], {
     root: path.resolve(__dirname),
     verbose: true
@@ -52,7 +50,8 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
-        loader: 'ts-loader'
+        loader: 'ts-loader',
+        exclude: /\.spec\.tsx?/
       },
       {
         test: /\.(sa|sc|c)ss$/,
