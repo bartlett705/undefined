@@ -1,6 +1,5 @@
 workflow "Master: test, build, deploy" {
-  # resolves = ["Notify Deploy End", "Notify Master Start", "Deploy"]
-  resolves = ["Deploy"]
+  resolves = ["Notify Deploy End", "Notify Master Start", "Deploy"]
   on = "push"
 }
 
@@ -42,7 +41,7 @@ action "Automation Tests" {
 }
 
 action "Deploy" {
-  # needs = ["Automation Tests"]
+  needs = ["Automation Tests"]
   uses = "swinton/httpie.action@8ab0a0e926d091e0444fcacd5eb679d2e2d4ab3d"
   args = ["POST", "https://mosey.systems/api/vanatu", "action=completed", "repository=undefined", "X-Hub-Signature:$HUB_SIGNATURE"]
   secrets = ["HUB_SIGNATURE"]
