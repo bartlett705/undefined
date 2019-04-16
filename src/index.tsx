@@ -62,6 +62,13 @@ class App extends React.Component<{}, State> {
 
   private onSubmit = async (input: string) => {
     this.setState({ working: true })
+
+    if (input === 'cv') {
+      window.open('https://linkedin.com/in/codemosey')
+      this.setState({ working: false })
+      return
+    }
+
     let { readMode, ttyContent, ttyType, ttyPayload }: Partial<State> = {
       readMode: false,
       ttyContent: ['Unrecognized Server Response 😭 '],
