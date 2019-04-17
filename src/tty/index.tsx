@@ -14,6 +14,13 @@ export interface Props {
 
 export class TTY extends React.Component<Props, { clicked: boolean }> {
   public state = { clicked: false }
+  private timerHandle: number
+  public componentDidMount() {
+    this.timerHandle = window.setTimeout(() => this.setState({ clicked: true }), 11_000)
+  }
+  public componentWillUnmount() {
+    window.clearTimeout(this.timerHandle)
+  }
   public render() {
     const { cancelPost, type } = this.props
     return (
@@ -24,7 +31,6 @@ export class TTY extends React.Component<Props, { clicked: boolean }> {
             : 'tty--clicked')}`}
         onClick={this.showInput}
         onMouseEnter={this.showInput}
-        onFocus={this.showInput}
         tabIndex={1}
         data-testid="tty"
       >

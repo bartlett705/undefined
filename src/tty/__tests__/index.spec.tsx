@@ -15,7 +15,7 @@ const setup = setupTest<Props>(TTY, defaultProps)
 beforeEach(jest.useFakeTimers)
 afterEach(jest.useRealTimers)
 
-const testEvents = ['click', 'mouseEnter', 'focus']
+const testEvents = ['click', 'mouseEnter']
 
 testEvents.forEach((event: EventType) => {
   it(`shows an input on ${event}`, () => {
@@ -27,9 +27,25 @@ testEvents.forEach((event: EventType) => {
     getByText('garbage')
     getByText('LUL')
 
-    fireEvent[event](getByTestId('tty'))
-    jest.runOnlyPendingTimers()
+    expect(
+      getByPlaceholderText('help').parentElement.parentElement.className
+    ).not.toMatch(/clicked/)
 
-    getByPlaceholderText('help')
+    fireEvent[event](getByTestId('tty'))
+
+    expect(
+      getByPlaceholderText('help').parentElement.parentElement.className
+    ).toMatch(/clicked/)
   })
+})
+
+it('shows an input after eleven seconds', () => {
+  const { getByPlaceholderText, asFragment, getByTestId, getByText } = setup()
+  expect(
+    getByPlaceholderText('help').parentElement.parentElement.className
+  ).not.toMatch(/clicked/)
+  jest.runTimersToTime(11_000)
+  expect(
+    getByPlaceholderText('help').parentElement.parentElement.className
+  ).toMatch(/clicked/)
 })
