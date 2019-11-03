@@ -12,14 +12,15 @@ jobs:
     name: npm install
     runs-on: ubuntu-18.04
     steps:
+      - uses: actions/checkout@v1
       - uses: actions/setup-node@v1.1.0
       - name: Install
         run: npm ci
   
   test:
     name: npm test
+    needs: [install]
     runs-on: ubuntu-18.04
     steps:
-      - uses: actions/setup-node@v1.1.0
       - name: Unit Tests
         run: npm t
