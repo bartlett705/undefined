@@ -1,0 +1,25 @@
+name: CI Master
+
+on:
+  push:
+    branches: 
+      - master
+
+jobs:
+     
+  install:
+    
+    name: npm install
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/setup-node@v1.1.0
+      - name: Install
+        run: npm ci
+  
+  test:
+    name: npm test
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/setup-node@v1.1.0
+      - name: Unit Tests
+        run: npm t
