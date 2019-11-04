@@ -15,7 +15,10 @@ jobs:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1.1.0
       - name: Notify start
-        run: curl https://discordapp.com/api/webhooks/$DC_ID/$DC_TOKEN -X POST --data "username=GitHub&content=\`undefined master\` push received 👍 $GITHUB_SHA"
+        env:
+          DC_ID: ${{ secrets.DC_ID }} 
+          DC_TOKEN: ${{ secrets.DC_TOKEN }}
+        run: curl https://discordapp.com/api/webhooks/$DC_ID/$DC_TOKEN -X POST --data "username=GitHub&content=\`$GITHUB_REPOSITORY $GITHUB_REF\` push received 👍 $GITHUB_SHA"
       - name: Install
         run: npm ci
       - name: Unit Tests
@@ -25,7 +28,12 @@ jobs:
       - name: Build
         run: npm run build
       - name: Deploy
+        env:
+          HUB_SIGNATURE: ${{ secrets.HUB_SIGNATURE }} 
         run: curl -v https://mosey.systems/api/vanatu -X POST --data "action=completed&repository=undefined" -H "X-Hub-Signature:$HUB_SIGNATURE"
       - name: Notify complete
-        run: curl https://discordapp.com/api/webhooks/$DC_ID/$DC_TOKEN -X POST --data "username=GitHub&content=\`undefined master\` deploy complete 🎉 $GITHUB_SHA"
+        env:
+          DC_ID: ${{ secrets.DC_ID }} 
+          DC_TOKEN: ${{ secrets.DC_TOKEN }}
+        run: curl https://discordapp.com/api/webhooks/$DC_ID/$DC_TOKEN -X POST --data "username=GitHub&content=\`$GITHUB_REPOSITORY $GITHUB_REF\` deploy complete 🎉 $GITHUB_SHA"
 
