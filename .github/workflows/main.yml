@@ -7,20 +7,25 @@ on:
 
 jobs:
      
-  install:
+  deploy:
     
-    name: npm install
+    name: Test and Deploy
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1.1.0
+      - name: Notify start
+        run: curl https://discordapp.com/api/webhooks/$DC_ID/$DC_TOKEN -X POST --data "username=GitHub&content=\`undefined master\` push received 👍 $GITHUB_SHA"
       - name: Install
         run: npm ci
-  
-  test:
-    name: npm test
-    needs: [install]
-    runs-on: ubuntu-18.04
-    steps:
       - name: Unit Tests
         run: npm t
+      - name: E2E Tests
+        run: npm run cy:run
+      - name: Build
+        run: npm run build
+      - name: Deploy
+        run: curl -v https://mosey.systems/api/vanatu -X POST --data "action=completed&repository=undefined" -H "X-Hub-Signature:$HUB_SIGNATURE"
+      - name: Notify complete
+        run: curl https://discordapp.com/api/webhooks/$DC_ID/$DC_TOKEN -X POST --data "username=GitHub&content=\`undefined master\` deploy complete 🎉 $GITHUB_SHA"
+
