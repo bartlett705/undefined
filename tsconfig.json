@@ -7,8 +7,15 @@
     "noImplicitThis": true,
     "sourceMap": true,
     "target": "es5",
-    "types": ["cypress"]
+    "types": ["jest", "cypress"]
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "**/*.spec.ts", "**/*.js", "build", "ci", "cypress"]
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts",
+    "**/*.js",
+    "build",
+    "ci",
+    "cypress"
+  ]
 }

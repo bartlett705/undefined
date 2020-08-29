@@ -12,7 +12,7 @@ const defaultProps = () => ({
 
 const setup = setupTest<Props>(TTY, defaultProps)
 
-beforeEach(jest.useFakeTimers)
+beforeEach(() => jest.useFakeTimers())
 afterEach(jest.useRealTimers)
 
 const testEvents = ['click', 'mouseEnter']
