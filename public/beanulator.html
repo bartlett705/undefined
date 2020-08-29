@@ -1,0 +1,218 @@
+<head>
+  <style>
+    body {
+      background-color: gray;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: monospace;
+    }
+
+    section {
+      background-color: bisque;
+      border-radius: 1rem;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    input {
+      margin-bottom: 0.25rem;
+    }
+    span {
+      font-weight: 700;
+    }
+
+    hr {
+      width: 50%;
+    }
+    .control {
+      flex-shrink: 0;
+      height: 3rem;
+      width: 3rem;
+      margin-left: 1rem;
+      margin-right: 1rem;
+      font-size: 2rem;
+      font-weight: 700;
+      background-color: bisque;
+      border-radius: 100%;
+      padding: 0.5rem;
+      border: 1px solid red;
+      align-items: center;
+      justify-content: center;
+      display: flex;
+    }
+
+    input,
+    button {
+      border-radius: 0.25rem;
+    }
+
+    input {
+      width: 2rem;
+    }
+    button {
+      background-color: #5af;
+    }
+    .flex-v {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .flex-h {
+      display: flex;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section>
+      <button class="control" onclick="dec()">-</button>
+      <div>
+        <input id="inp" onchange="compute()" placeholder="0" /><br />
+        Result:
+        <span id="res">0</span>
+      </div>
+      <button class="control" onclick="inc()">+</button>
+    </section>
+    <hr />
+    <section class="flex-v">
+      <form onsubmit="return doKnapsack(event)">
+        <div class="flex-h">
+          <div class="flex-v">
+            <table>
+              <tr>
+                <td>
+                  <label>
+                    Big Bag Favor Factor:
+                  </label>
+                </td>
+                <td>
+                  <input id="factor" value="3" required />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label>
+                    Batches
+                  </label>
+                </td>
+                <td>
+                  <input id="batches" value="3" type="number" required />
+                </td>
+              </tr>
+            </table>
+          </div>
+          <button>Divide Bags</button>
+        </div>
+        <div>Total Weight: <span id="totalWeight" /></div>
+      </form>
+
+      <hr />
+      <table>
+        <tr>
+          <td>
+            Big Bags:
+          </td>
+          <td>
+            <span id="largeBags" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Small Bags:
+          </td>
+          <td>
+            <span id="smallBags" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Leftovers:
+          </td>
+          <td>
+            <span id="remainingWeight" />
+          </td>
+        </tr>
+      </table>
+    </section>
+  </main>
+</body>
+<script>
+  const input = document.querySelector('#inp')
+  function inc() {
+    input.value++
+    compute()
+  }
+
+  function dec() {
+    input.value--
+    compute()
+  }
+
+  function compute() {
+    console.log(input.value)
+    const res = document.querySelector('#res')
+    res.innerHTML = input.value * 2330
+  }
+
+  function knapsack(factor, totalWeight) {
+    console.log('parameters: factor ', factor, ' weight ', totalWeight)
+    let remainingWeight = totalWeight
+    let smallBags = 0
+    let largeBags = 0
+    while (remainingWeight > 196) {
+      if (remainingWeight < 350) {
+        // only enough left for a small bag
+        console.log('small bag added (remnant)')
+
+        smallBags++
+        remainingWeight = remainingWeight - 196
+      } else if (Math.ceil(smallBags * factor) < largeBags) {
+        console.log('small bag added (factor)')
+
+        // we are favoring large bags too much; add a small one.
+        smallBags++
+        remainingWeight = remainingWeight - 196
+      } else {
+        // Big bag, baby
+        console.log('big bag added')
+        largeBags++
+        remainingWeight = remainingWeight - 350
+      }
+    }
+    console.log(
+      `BAG COUNT.\n LARGE: ${largeBags} | SMALL: ${smallBags}\n LEFTOVERS: ${remainingWeight}`
+    )
+
+    return { smallBags, largeBags, remainingWeight }
+  }
+
+  function doKnapsack(e) {
+    e.preventDefault()
+    const batches = document.querySelector('#batches').value
+    const factor = document.querySelector('#factor').value
+
+    const totalWeight = batches * 2000
+    const totalWeightEl = document.querySelector('#totalWeight')
+    totalWeightEl.innerHTML = totalWeight + 'g'
+
+    const results = knapsack(factor, totalWeight)
+    const largeBags = document.querySelector('#largeBags')
+    const smallBags = document.querySelector('#smallBags')
+    const remainingWeight = document.querySelector('#remainingWeight')
+    largeBags.innerHTML = results.largeBags
+    smallBags.innerHTML = results.smallBags
+    remainingWeight.innerHTML = results.remainingWeight + 'g'
+    return false
+  }
+</script>
+<!-- 🙈 -->
+<script>
+  const stag = document.createElement('script')
+  stag.src = 'https://chaitown.mosey.systems/charcoal-client/index.js'
+  stag.onload = () => window.trackPageview({ location: 'beanulator' })
+  document.documentElement.appendChild(stag)
+</script>
+<!-- /🙈 -->
