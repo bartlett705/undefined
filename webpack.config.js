@@ -14,19 +14,21 @@ const plugins = [
 
 if (!devMode) {
   plugins.push(
-    new CopyWebpackPlugin([{ from: 'public/', to: '.' }]),
+    new CopyWebpackPlugin({ patterns: [{ from: 'public/', to: '.' }] }),
     new MiniCssExtractPlugin({
       filename: devMode ? '[name].css' : '[name].[hash].css',
       chunkFilename: devMode ? '[id].css' : '[id].[hash].css'
-    }),
+    })
   )
 }
 
 if (!devMode && !process.env.CI) {
-  plugins.push(new CleanWebPackPlugin(['build'], {
-    root: path.resolve(__dirname),
-    verbose: true
-  }))
+  plugins.push(
+    new CleanWebPackPlugin(['build'], {
+      root: path.resolve(__dirname),
+      verbose: true
+    })
+  )
 }
 
 module.exports = {

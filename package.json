@@ -12,6 +12,7 @@
     "deploy": "npm run build && scp -P 5235 -i ci/travis_id_rsa build/*.* travis@mosey.systems:/var/www/undefined/build"
   },
   "dependencies": {
+    "@types/copy-webpack-plugin": "^6.0.0",
     "@types/dotenv": "^4.0.3",
     "@types/jest": "^26.0.10",
     "@types/jest-axe": "^2.2.3",
@@ -34,7 +35,7 @@
     "ts-loader": "^5.1.1",
     "typescript": "^4.0.2",
     "wait-on": "^3.2.0",
-    "webpack": "^4.19.1",
+    "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"
   },
   "devDependencies": {
