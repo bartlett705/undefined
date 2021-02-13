@@ -44,10 +44,9 @@ class App extends React.Component<{}, State> {
           >
             {this.state.working ? loadingContent : this.state.ttyContent}
           </TTY>
-          {this.state.readMode &&
-            this.state.ttyPayload && (
-              <Reader posts={this.state.ttyPayload.body} />
-            )}
+          {this.state.readMode && this.state.ttyPayload && (
+            <Reader posts={this.state.ttyPayload.body} />
+          )}
         </main>
       </>
     )
@@ -65,8 +64,6 @@ class App extends React.Component<{}, State> {
 
     if (input === 'cv') {
       window.open('https://linkedin.com/in/codemosey')
-      this.setState({ working: false })
-      return
     }
 
     let { readMode, ttyContent, ttyType, ttyPayload }: Partial<State> = {
@@ -88,7 +85,7 @@ class App extends React.Component<{}, State> {
 
       switch (res.status) {
         case 200:
-          ({
+          ;({
             content: ttyContent,
             payload: ttyPayload,
             type: ttyType
