@@ -5,11 +5,11 @@
   "license": "ISC",
   "scripts": {
     "build": "NODE_ENV=production webpack",
-    "build:vanatu": "NODE_ENV=production CI=true node --max_old_space_size=200 node_modules/webpack/bin/webpack.js",
+    "build:vanatu": "NODE_ENV=production CI=true node --max_old_space_size=256 node_modules/webpack/bin/webpack.js",
     "start": "webpack-dev-server",
     "test": "jest",
     "cy:run": "scripts/cy-run.sh",
-    "deploy": "npm run build && scp -P 5235 -i ci/travis_id_rsa build/*.* travis@mosey.systems:/var/www/undefined/build"
+    "deploy": "npm run build && scp -P 5235 -i ~/.ssh/bdo_id_rsa build/*.* ahmad@mosey.systems:/var/www/vanatu_deployed/undefined/build"
   },
   "dependencies": {
     "@types/copy-webpack-plugin": "^6.0.0",
